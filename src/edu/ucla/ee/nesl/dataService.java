@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 
+
+
 public class dataService extends Service implements SensorEventListener, LocationListener {
 
 	String TAG = "DataService" ;
