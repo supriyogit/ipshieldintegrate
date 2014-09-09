@@ -8,120 +8,111 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity" >
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/startButton"
-        android:layout_alignBottom="@+id/startButton"
-        android:layout_marginLeft="58dp"
-        android:layout_toRightOf="@+id/startButton"
-        android:text="Stop" />
-
-    <EditText
-        android:id="@+id/editText1"
+    <TextView
+        android:id="@+id/textViewClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_alignRight="@+id/textView1"
-        android:layout_marginTop="22dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText1"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="26dp"
-        android:ems="10" />
-
-    <EditText
-        android:id="@+id/editText3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/editText2"
-        android:layout_below="@+id/editText2"
-        android:layout_marginTop="24dp"
-        android:ems="10"
-        android:inputType="number" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/editText2"
-        android:layout_alignLeft="@+id/textView1"
+        android:layout_marginTop="32dp"
         android:text="Client ID" />
 
     <TextView
-        android:id="@+id/TextView01"
+        android:id="@+id/textViewServer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText2"
-        android:layout_alignBottom="@+id/editText2"
-        android:layout_alignLeft="@+id/textView2"
+        android:layout_alignLeft="@+id/textViewClient"
+        android:layout_below="@+id/clientID"
+        android:layout_marginTop="30dp"
         android:text="Server" />
 
     <TextView
-        android:id="@+id/TextView02"
+        android:id="@+id/textViewPort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/editText3"
-        android:layout_alignBottom="@+id/editText3"
-        android:layout_alignLeft="@+id/TextView01"
+        android:layout_alignLeft="@+id/textViewServer"
+        android:layout_below="@+id/textViewServer"
+        android:layout_marginTop="36dp"
         android:text="Port" />
+    
+    <EditText
+        android:id="@+id/clientID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewClient"
+        android:layout_alignRight="@+id/server"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/server"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewServer"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/textViewClient"
+        android:ems="10" />
+
+    <EditText
+        android:id="@+id/port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewPort"
+        android:layout_alignLeft="@+id/server"
+        android:ems="10"
+        android:inputType="number" />
 
     <CheckBox
-        android:id="@+id/checkBox1"
+        android:id="@+id/acc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/TextView02"
+        android:layout_alignLeft="@+id/textViewPort"
         android:layout_centerVertical="true"
         android:text="Accelerometer" />
 
     <CheckBox
-        android:id="@+id/CheckBox01"
+        android:id="@+id/gps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/acc"
+        android:layout_alignBottom="@+id/acc"
         android:layout_alignLeft="@+id/stopButton"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="17dp"
         android:text="GPS" />
 
     <CheckBox
-        android:id="@+id/CheckBox02"
+        android:id="@+id/gyro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/checkBox1"
-        android:layout_below="@+id/checkBox1"
-        android:layout_marginTop="17dp"
+        android:layout_alignLeft="@+id/acc"
+        android:layout_below="@+id/acc"
+        android:layout_marginTop="35dp"
         android:text="Gyroscope" />
 
     <CheckBox
-        android:id="@+id/CheckBox03"
+        android:id="@+id/light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/CheckBox02"
-        android:layout_alignBottom="@+id/CheckBox02"
-        android:layout_alignLeft="@+id/CheckBox01"
+        android:layout_alignBaseline="@+id/gyro"
+        android:layout_alignBottom="@+id/gyro"
+        android:layout_alignLeft="@+id/gps"
         android:text="Light" />
 
     <Button
         android:id="@+id/startButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="42dp"
+        android:layout_below="@+id/gyro"
+        android:layout_marginTop="43dp"
+        android:layout_toRightOf="@+id/textViewServer"
         android:text="Publish" />
 
-    <TextView
-        android:id="@+id/textView1"
+    <Button
+        android:id="@+id/stopButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/stopButton"
-        android:layout_centerHorizontal="true"
-        android:text="@string/message" />
-    
+        android:layout_alignBaseline="@+id/startButton"
+        android:layout_alignBottom="@+id/startButton"
+        android:layout_alignRight="@+id/port"
+        android:layout_marginRight="40dp"
+        android:text="Stop" />
+	
 </RelativeLayout>

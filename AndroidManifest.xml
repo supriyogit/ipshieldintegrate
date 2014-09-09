@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+           android:name="edu.ucla.ee.nesl.dataService"
+           android:enabled="true"
+           android:label="@string/service_name">
+        </service>
     </application>
-
+	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />    
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

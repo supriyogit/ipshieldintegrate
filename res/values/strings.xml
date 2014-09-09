@@ -3,6 +3,7 @@
 
     <string name="app_name">ipshieldintegrate</string>
     <string name="action_settings">Settings</string>
-    <string name="message">Click Button To Start Stop DataService</string>
+    <string name="message">Publish Data Streams; To finish press Stop</string>
+    <string name="service_name">DataService</string>
 
 </resources>
