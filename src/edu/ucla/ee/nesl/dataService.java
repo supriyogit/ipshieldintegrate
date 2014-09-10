@@ -22,6 +22,7 @@ public class dataService extends Service implements SensorEventListener, Locatio
 	LocationManager locationManager = null;
 	String server = "", client = "";
 	int port = 0;
+	SimpleConnection connection;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -35,6 +36,7 @@ public class dataService extends Service implements SensorEventListener, Locatio
 		Log.d("TAG", "Creating Service First Time");
 		sensorManager = (SensorManager) this.getSystemService(this.SENSOR_SERVICE);
 		locationManager = (LocationManager)this.getSystemService(this.LOCATION_SERVICE);
+		Log.d(TAG, "Initialized the managers");
 		super.onCreate();
 	}
 
@@ -42,6 +44,7 @@ public class dataService extends Service implements SensorEventListener, Locatio
 	public void onDestroy() {
 		Log.d(TAG, "Stopping Service");
 		sensorManager.unregisterListener(this);
+		connection = null;
 		super.onDestroy();
 	}
 
@@ -66,6 +69,14 @@ public class dataService extends Service implements SensorEventListener, Locatio
 			sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 			sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
 		}
+		
+		connection = SimpleConnection.createConnection(client, server, port);
+		
+		if(connection != null)
+			Log.d(TAG, "Connected to MQTT Server");
+		else 
+			Log.d(TAG, "Not connected to Server");
+		
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -75,14 +86,27 @@ public class dataService extends Service implements SensorEventListener, Locatio
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
+		String str = "";
 		if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-			Log.d(TAG, "a-X = " + event.values[0] + "; a-Y = " + event.values[1] + "; a-Z = " + event.values[2]);
+			str = "a-X = " + event.values[0] + "; a-Y = " + event.values[1] + "; a-Z = " + event.values[2];
+			if(connection != null) {
+				connection.publish("accelerometer", str);
+			}
+			//Log.d(TAG, str);
 		}
 		if(event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-			Log.d(TAG, "g-X = " + event.values[0] + "; g-Y = " + event.values[1] + "; g-Z = " + event.values[2]);
+			str = "g-X = " + event.values[0] + "; g-Y = " + event.values[1] + "; g-Z = " + event.values[2];
+			if(connection != null) {
+				connection.publish("gyroscope", str);
+			}
+			Log.d(TAG, str);
 		}
 		if(event.sensor.getType() == Sensor.TYPE_LIGHT) {
-			Log.d(TAG, "light = " + event.values[0]);
+			str = "light = " + event.values[0];
+			if(connection != null) {
+				connection.publish("light", str);
+			}
+			Log.d(TAG, str);
 		}
 	}
 
