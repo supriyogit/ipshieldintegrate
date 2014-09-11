@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.util.Log;
 
 
@@ -23,6 +24,9 @@ public class dataService extends Service implements SensorEventListener, Locatio
 	String server = "", client = "";
 	int port = 0;
 	SimpleConnection connection;
+	String accStr = "", gyroStr = "",lightStr = "", gpsStr= "";
+	long currentTime = SystemClock.uptimeMillis();
+	int PUBLISH_TIME = 10000;
 	
 	@Override
 	public IBinder onBind(Intent arg0) {
@@ -87,26 +91,33 @@ public class dataService extends Service implements SensorEventListener, Locatio
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		String str = "";
-		if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
-			str = "a-X = " + event.values[0] + "; a-Y = " + event.values[1] + "; a-Z = " + event.values[2];
-			if(connection != null) {
-				connection.publish("accelerometer", str);
+		if((SystemClock.uptimeMillis() - currentTime) > PUBLISH_TIME) {
+			if(event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
+				//str = "a-X = " + event.values[0] + "; a-Y = " + event.values[1] + "; a-Z = " + event.values[2];
+				accStr = "a-X = " + event.values[0] + "; a-Y = " + event.values[1] + "; a-Z = " + event.values[2];
+				if(connection != null) {
+					connection.publish("accelerometer", accStr);
+				}
+				Log.d(TAG, accStr);
 			}
-			//Log.d(TAG, str);
-		}
-		if(event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
-			str = "g-X = " + event.values[0] + "; g-Y = " + event.values[1] + "; g-Z = " + event.values[2];
-			if(connection != null) {
-				connection.publish("gyroscope", str);
+			if(event.sensor.getType() == Sensor.TYPE_GYROSCOPE) {
+				//str = "g-X = " + event.values[0] + "; g-Y = " + event.values[1] + "; g-Z = " + event.values[2];
+				gyroStr = "g-X = " + event.values[0] + "; g-Y = " + event.values[1] + "; g-Z = " + event.values[2];
+				if(connection != null) {
+					connection.publish("gyroscope", gyroStr);
+				}
+				Log.d(TAG, gyroStr);
 			}
-			Log.d(TAG, str);
-		}
-		if(event.sensor.getType() == Sensor.TYPE_LIGHT) {
-			str = "light = " + event.values[0];
-			if(connection != null) {
-				connection.publish("light", str);
+			if(event.sensor.getType() == Sensor.TYPE_LIGHT) {
+				//str = "light = " + event.values[0];
+				lightStr = "light = " + event.values[0];
+
+				if(connection != null) {
+					connection.publish("light", lightStr);
+				}
+				Log.d(TAG, lightStr);
 			}
-			Log.d(TAG, str);
+			currentTime = SystemClock.uptimeMillis();
 		}
 	}
 
@@ -130,7 +141,6 @@ public class dataService extends Service implements SensorEventListener, Locatio
 
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub		
 	}
 }

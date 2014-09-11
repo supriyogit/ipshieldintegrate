@@ -16,6 +16,7 @@ package edu.ucla.ee.nesl;
 import android.content.Context;
 import android.util.Log;
 
+import org.eclipse.paho.client.mqttv3.MqttAsyncClient;
 import org.eclipse.paho.client.mqttv3.MqttClient;
 import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
@@ -38,14 +39,14 @@ public class SimpleConnection {
   
 
   /** The {@link MqttAndroidClient} instance this class represents**/
-  private MqttClient client = null;
+  private MqttAsyncClient client = null;
 
   
   public static SimpleConnection createConnection(String clientID, String server, int port) {
 	  String uri = null;
 	  uri = "tcp://" + server + ":" + port;
 	  try {
-		  MqttClient client = new MqttClient(uri, clientID);
+		  MqttAsyncClient client = new MqttAsyncClient(uri, clientID);
 		  client.connect();
 		  return new SimpleConnection(clientID, server, port, client);
 	  }
@@ -56,7 +57,7 @@ public class SimpleConnection {
 	  
   }
   public SimpleConnection(String clientID, String server,
-      int port, MqttClient client) {
+      int port, MqttAsyncClient client) {
 	  
     this.clientID = clientID;
     this.host = server;
